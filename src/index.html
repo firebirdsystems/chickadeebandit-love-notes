@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/run/love-notes/" />
+  <title>Love Notes</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--hub-font, system-ui, sans-serif);
+      font-size: var(--hub-font-size, 15px);
+      background: var(--hub-bg, #f9fafb);
+      color: var(--hub-text, #111827);
+      min-height: 100vh;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── App header ── */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 0;
+    }
+    .app-header-left { display: flex; align-items: center; gap: 8px; }
+    .app-header .icon { font-size: 1.3rem; }
+    .app-header h1 { font-size: 1.25rem; font-weight: 700; }
+
+    /* ── Setup view ── */
+    .setup-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+      min-height: 80vh;
+      justify-content: center;
+    }
+    .setup-card {
+      background: var(--hub-surface, #fff);
+      border: 1px solid var(--hub-border, #e5e7eb);
+      border-radius: var(--hub-radius, 8px);
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .setup-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .setup-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+    .setup-card .setup-desc { color: var(--hub-text-muted, #6b7280); font-size: 0.9rem; margin-bottom: 24px; }
+    .setup-card .pick-label { font-weight: 600; margin-bottom: 12px; text-align: left; display: block; }
+    .member-list { margin-bottom: 20px; }
+
+    .member-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--hub-border, #e5e7eb);
+      border-radius: var(--hub-radius, 6px);
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: border-color .15s, background .15s;
+      text-align: left;
+    }
+    .member-option input[type="radio"] { accent-color: var(--hub-primary, #6366f1); }
+    .member-option:has(input:checked) {
+      border-color: var(--hub-primary, #6366f1);
+      background: color-mix(in srgb, var(--hub-primary, #6366f1) 6%, transparent);
+    }
+    .member-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .member-name { font-weight: 500; font-size: 0.95rem; }
+
+    /* ── Main content ── */
+    .content { padding: 12px 20px 20px; max-width: 600px; }
+
+    .partner-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--hub-text-muted, #6b7280);
+      font-size: 0.85rem;
+    }
+    .partner-bar .partner-avatar { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .partner-bar .partner-name { font-weight: 600; color: var(--hub-text, #111827); }
+
+    /* ── Notes list ── */
+    .notes-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .note-card {
+      background: var(--hub-surface, #fff);
+      border: 1px solid var(--hub-border, #e5e7eb);
+      border-radius: var(--hub-radius, 8px);
+      padding: 14px 16px;
+    }
+    .note-card.unread {
+      border-left: 3px solid var(--hub-primary, #6366f1);
+      background: color-mix(in srgb, var(--hub-primary, #6366f1) 4%, var(--hub-surface, #fff));
+    }
+    .note-meta {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+    }
+    .note-meta .note-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .note-meta .note-sender { font-weight: 600; font-size: 0.875rem; }
+    .note-meta .unread-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--hub-primary, #6366f1); flex-shrink: 0; }
+    .note-meta .note-time { margin-left: auto; font-size: 0.8rem; color: var(--hub-text-muted, #6b7280); white-space: nowrap; }
+    .note-content { font-size: 0.95rem; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center; padding: 48px 20px; color: var(--hub-text-muted, #6b7280);
+    }
+    .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.95rem; }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      background: var(--hub-primary, #6366f1);
+      color: var(--hub-primary-fg, #fff);
+      border: none;
+      border-radius: var(--hub-radius, 6px);
+      padding: 10px 20px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: opacity .15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover:not(:disabled) { opacity: .85; }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-secondary {
+      background: transparent; color: var(--hub-text, #111827);
+      border: 1px solid var(--hub-border, #e5e7eb);
+      border-radius: var(--hub-radius, 6px);
+      padding: 10px 20px; font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    }
+    .btn-secondary:hover { background: var(--hub-bg, #f9fafb); }
+    .btn-icon {
+      background: transparent; border: none; cursor: pointer;
+      color: var(--hub-text-muted, #6b7280);
+      padding: 6px; border-radius: var(--hub-radius, 4px);
+      font-size: 1rem; line-height: 1;
+    }
+    .btn-icon:hover { color: var(--hub-text, #111827); background: var(--hub-bg, #f9fafb); }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 20px;
+    }
+    .modal {
+      background: var(--hub-surface, #fff);
+      border-radius: var(--hub-radius, 8px);
+      padding: 24px; width: 100%; max-width: 440px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    }
+    .modal h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
+    .modal textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--hub-border, #e5e7eb);
+      border-radius: var(--hub-radius, 6px);
+      background: var(--hub-bg, #f9fafb);
+      color: var(--hub-text, #111827);
+      font-family: inherit; font-size: inherit;
+      resize: vertical; min-height: 130px;
+    }
+    .modal textarea:focus { outline: 2px solid var(--hub-primary, #6366f1); outline-offset: 1px; }
+    .char-count { font-size: 0.8rem; color: var(--hub-text-muted, #6b7280); text-align: right; margin: 4px 0 16px; }
+    .char-count.over { color: #ef4444; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Setup view ── -->
+  <div id="view-setup" class="view">
+    <div class="setup-wrap">
+      <div class="setup-card">
+        <div class="setup-icon">💌</div>
+        <h2>Love Notes</h2>
+        <p class="setup-desc">Leave sweet notes for your partner. Only the two of you will see them.</p>
+        <span class="pick-label">Who is your partner?</span>
+        <div id="setup-members" class="member-list"></div>
+        <button class="btn-primary" style="width:100%;justify-content:center" onclick="savePartner()">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main view ── -->
+  <div id="view-main" class="view">
+    <div class="app-header">
+      <div class="app-header-left">
+        <span class="icon">💌</span>
+        <h1>Love Notes</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn-icon" title="Change partner" onclick="showSetup()">⚙️</button>
+        <button class="btn-primary" onclick="openCompose()">✏️ Write a Note</button>
+      </div>
+    </div>
+    <div class="content">
+      <div id="partner-bar" class="partner-bar"></div>
+      <div id="notes-list" class="notes-list"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { esc, initial, memberColor, formatRelativeDate } from "/hub-sdk.js";
+    import { validateNote } from "./logic.js";
+
+    const CONTEXT = window.__CONTEXT_URL ?? "";
+    const DB      = window.__DB_URL      ?? "";
+    const ME      = window.__CURRENT_MEMBER ?? null;
+    const APP_ID  = window.__APP_ID ?? "love-notes";
+
+    let members = [];
+    let partner = null;
+    let notes   = [];
+    let modalEl = null;
+
+    // ── DB helper ─────────────────────────────────────────────────────────────
+    async function db(sql, params = []) {
+      if (!DB) return { rows: [] };
+      const res = await fetch(DB, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sql, params }),
+      });
+      return res.json();
+    }
+
+    // ── Data loading ──────────────────────────────────────────────────────────
+    async function loadMembers() {
+      if (!CONTEXT) {
+        members = [
+          { id: "demo-1", name: "Alex",   role: "adult" },
+          { id: "demo-2", name: "Jordan", role: "adult" },
+          { id: "demo-3", name: "Sam",    role: "adult" },
+        ];
+        return;
+      }
+      try {
+        const res = await fetch(`${CONTEXT}?keys=family.members`);
+        members = ((await res.json())["family.members"]) ?? [];
+      } catch { members = []; }
+    }
+
+    async function loadPartner() {
+      if (!ME) return null;
+      const { rows } = await db(
+        "SELECT partner_id FROM partner_config WHERE member_id = ?",
+        [ME.id]
+      );
+      return rows.length ? (members.find(m => m.id === rows[0].partner_id) ?? null) : null;
+    }
+
+    async function loadNotes() {
+      if (!ME) {
+        notes = [
+          { id: "d1", sender_id: "demo-2", recipient_id: "demo-1", content: "Good morning! Have a wonderful day ☀️",     sent_at: new Date(Date.now() - 3_600_000).toISOString(), read_at: new Date().toISOString() },
+          { id: "d2", sender_id: "demo-2", recipient_id: "demo-1", content: "Don't forget we have dinner plans at 7 :)", sent_at: new Date(Date.now() - 7_200_000).toISOString(), read_at: null },
+        ];
+        return;
+      }
+      const { rows } = await db(
+        "SELECT * FROM notes WHERE recipient_id = ? ORDER BY sent_at DESC",
+        [ME.id]
+      );
+      notes = rows;
+    }
+
+    async function markUnreadAsRead() {
+      if (!ME || !notes.some(n => !n.read_at)) return;
+      const now = new Date().toISOString();
+      await db(
+        "UPDATE notes SET read_at = ? WHERE recipient_id = ? AND read_at IS NULL",
+        [now, ME.id]
+      );
+      notes = notes.map(n => n.read_at ? n : { ...n, read_at: now });
+    }
+
+    // ── Partner save ──────────────────────────────────────────────────────────
+    window.savePartner = async function() {
+      const sel = document.querySelector('#setup-members input[type="radio"]:checked');
+      if (!sel) return;
+      const partnerId = sel.value;
+
+      const btn = document.querySelector('#view-setup .btn-primary');
+      if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+
+      try {
+        if (ME) {
+          await db(
+            `INSERT INTO partner_config (member_id, partner_id) VALUES (?, ?)
+             ON CONFLICT (member_id, household_id) DO UPDATE SET partner_id = EXCLUDED.partner_id`,
+            [ME.id, partnerId]
+          );
+        }
+        partner = members.find(m => m.id === partnerId) ?? null;
+        await loadNotes();
+        showMain();
+        markUnreadAsRead();
+      } catch(e) {
+        if (btn) { btn.disabled = false; btn.textContent = "Get Started"; }
+        throw e;
+      }
+    };
+
+    // ── Modal helpers ─────────────────────────────────────────────────────────
+    function openModal(html) {
+      closeModal();
+      modalEl = document.createElement("div");
+      modalEl.className = "modal-backdrop";
+      modalEl.innerHTML = `<div class="modal">${html}</div>`;
+      modalEl.addEventListener("click", e => { if (e.target === modalEl) closeModal(); });
+      document.body.appendChild(modalEl);
+    }
+    function closeModal() { modalEl?.remove(); modalEl = null; }
+
+    // ── Compose ───────────────────────────────────────────────────────────────
+    window.openCompose = function() {
+      openModal(`
+        <h3>Note to ${esc(partner?.name ?? "your partner")}</h3>
+        <textarea id="compose-text" placeholder="Write something sweet…" oninput="updateCharCount()"></textarea>
+        <div id="char-count" class="char-count">0 / 500</div>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" onclick="sendNote()">Send 💌</button>
+        </div>
+      `);
+      document.getElementById("compose-text").focus();
+    };
+
+    window.updateCharCount = function() {
+      const ta = document.getElementById("compose-text");
+      const el = document.getElementById("char-count");
+      if (!ta || !el) return;
+      const len = ta.value.length;
+      el.textContent = `${len} / 500`;
+      el.classList.toggle("over", len > 500);
+    };
+
+    window.sendNote = async function() {
+      const ta = document.getElementById("compose-text");
+      if (!ta) return;
+      const result = validateNote(ta.value);
+      if (!result.valid) { ta.focus(); return; }
+
+      const btn = modalEl?.querySelector(".modal-actions .btn-primary");
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+      try {
+        if (ME && partner) {
+          await db(
+            "INSERT INTO notes (id, sender_id, recipient_id, content, sent_at) VALUES (?, ?, ?, ?, ?)",
+            [crypto.randomUUID(), ME.id, partner.id, result.trimmed, new Date().toISOString()]
+          );
+          fetch("/api/notifications/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: "New Love Note 💌", body: `${ME.name} left you a note`, url: `/run/${APP_ID}` }),
+          }).catch(() => {});
+        }
+        closeModal();
+      } catch(e) {
+        if (btn) { btn.disabled = false; btn.textContent = "Send 💌"; }
+        throw e;
+      }
+    };
+
+    window.closeModal = closeModal;
+
+    // ── Views ─────────────────────────────────────────────────────────────────
+    window.showSetup = function() {
+      const otherAdults = members.filter(m => m.role === "adult" && m.id !== (ME?.id ?? "demo-1"));
+      const listEl = document.getElementById("setup-members");
+      listEl.innerHTML = otherAdults.map(m => {
+        const color = memberColor(m.id, members);
+        return `
+          <label class="member-option">
+            <input type="radio" name="partner" value="${esc(m.id)}" />
+            <span class="member-avatar" style="background:${color}">${esc(initial(m.name))}</span>
+            <span class="member-name">${esc(m.name)}</span>
+          </label>`;
+      }).join("");
+      if (partner) {
+        const radio = listEl.querySelector(`input[value="${CSS.escape(partner.id)}"]`);
+        if (radio) radio.checked = true;
+      }
+      document.getElementById("view-setup").classList.add("active");
+      document.getElementById("view-main").classList.remove("active");
+    };
+
+    function showMain() {
+      document.getElementById("view-setup").classList.remove("active");
+      document.getElementById("view-main").classList.add("active");
+      render();
+    }
+
+    function render() {
+      const partnerBarEl = document.getElementById("partner-bar");
+      if (partner) {
+        const color = memberColor(partner.id, members);
+        partnerBarEl.innerHTML = `
+          <span class="partner-avatar" style="background:${color}">${esc(initial(partner.name))}</span>
+          Notes from <span class="partner-name">${esc(partner.name)}</span>`;
+      } else {
+        partnerBarEl.innerHTML = "";
+      }
+
+      const listEl = document.getElementById("notes-list");
+      if (!notes.length) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">💌</div>
+            <p>No notes yet — write the first one for ${esc(partner?.name ?? "your partner")}.</p>
+          </div>`;
+        return;
+      }
+
+      const memberMap = Object.fromEntries(members.map(m => [m.id, m]));
+      listEl.innerHTML = notes.map(n => {
+        const sender = memberMap[n.sender_id] ?? { id: n.sender_id, name: "Someone" };
+        const color  = memberColor(sender.id, members);
+        const unread = !n.read_at;
+        return `
+          <div class="note-card${unread ? " unread" : ""}">
+            <div class="note-meta">
+              <span class="note-avatar" style="background:${color}">${esc(initial(sender.name))}</span>
+              <span class="note-sender">${esc(sender.name)}</span>
+              ${unread ? '<span class="unread-dot"></span>' : ""}
+              <span class="note-time">${formatRelativeDate(n.sent_at)}</span>
+            </div>
+            <div class="note-content">${esc(n.content)}</div>
+          </div>`;
+      }).join("");
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    (async () => {
+      await loadMembers();
+      partner = await loadPartner();
+      if (!partner) {
+        window.showSetup();
+      } else {
+        await loadNotes();
+        showMain();
+        markUnreadAsRead();
+      }
+    })();
+  </script>
+</body>
+</html>

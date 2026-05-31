@@ -366,7 +366,7 @@
           fetch("/api/notifications/send", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title: "New Love Note 💌", body: `${ME.name} left you a note`, url: `/run/${APP_ID}` }),
+            body: JSON.stringify({ title: "New Love Note 💌", body: `${ME.name} left you a note`, url: `/run/${APP_ID}`, audience: partner.id }),
           }).catch(() => {});
         }
         closeModal();

@@ -253,13 +253,13 @@
       } catch { members = []; }
     }
 
-    async function loadPartner() {
+    async function loadPartnerFromDb() {
       if (!ME) return null;
       const { rows } = await db(
         "SELECT partner_id FROM partner_config WHERE member_id = ?",
         [ME.id]
       );
-      return rows.length ? (members.find(m => m.id === rows[0].partner_id) ?? null) : null;
+      return rows.length ? rows[0].partner_id : null;
     }
 
     async function loadNotes() {
@@ -277,14 +277,13 @@
       notes = rows;
     }
 
-    async function markUnreadAsRead() {
+    function markUnreadAsRead() {
       if (!ME || !notes.some(n => !n.read_at)) return;
       const now = new Date().toISOString();
-      await db(
-        "UPDATE notes SET read_at = ? WHERE recipient_id = ? AND read_at IS NULL",
-        [now, ME.id]
-      );
+      // Optimistic: clear unread dots locally and re-render before DB write
       notes = notes.map(n => n.read_at ? n : { ...n, read_at: now });
+      render();
+      db("UPDATE notes SET read_at = ? WHERE recipient_id = ? AND read_at IS NULL", [now, ME.id]).catch(() => {});
     }
 
     // ── Partner save ──────────────────────────────────────────────────────────
@@ -305,9 +304,9 @@
           );
         }
         partner = members.find(m => m.id === partnerId) ?? null;
-        await loadNotes();
+        // Show main immediately with empty notes, then load notes in background
         showMain();
-        markUnreadAsRead();
+        loadNotes().then(() => { markUnreadAsRead(); render(); });
       } catch(e) {
         if (btn) { btn.disabled = false; btn.textContent = "Get Started"; }
         throw e;
@@ -446,8 +445,9 @@
 
     // ── Init ──────────────────────────────────────────────────────────────────
     (async () => {
-      await loadMembers();
-      partner = await loadPartner();
+      // Load members and partner DB row in parallel — neither depends on the other
+      const [, partnerId] = await Promise.all([loadMembers(), loadPartnerFromDb()]);
+      partner = partnerId ? (members.find(m => m.id === partnerId) ?? null) : null;
       if (!partner) {
         window.showSetup();
       } else {

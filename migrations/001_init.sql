@@ -1,13 +1,11 @@
-CREATE TABLE IF NOT EXISTS partner_config (
+CREATE TABLE IF NOT EXISTS app_love_notes__partner_config (
   member_id TEXT NOT NULL,
-  household_id UUID NOT NULL DEFAULT current_setting('app.household_id', true)::uuid,
   partner_id TEXT NOT NULL,
-  PRIMARY KEY (member_id, household_id)
+  PRIMARY KEY (member_id)
 );
 
-CREATE TABLE IF NOT EXISTS notes (
+CREATE TABLE IF NOT EXISTS app_love_notes__notes (
   id TEXT PRIMARY KEY,
-  household_id UUID NOT NULL DEFAULT current_setting('app.household_id', true)::uuid,
   sender_id TEXT NOT NULL,
   recipient_id TEXT NOT NULL,
   content TEXT NOT NULL,

@@ -16,6 +16,21 @@
     "requires_approval": false
   },
   "storage": "db",
+  "row_policies": {
+    "partner_config": {
+      "kind": "owner_only",
+      "member_column": "member_id",
+      "adults_bypass": false
+    },
+    "notes": {
+      "kind": "couple_scoped",
+      "self_column": "sender_id",
+      "participant_columns": ["sender_id", "recipient_id"],
+      "partner_table": "partner_config",
+      "partner_member_column": "member_id",
+      "partner_id_column": "partner_id"
+    }
+  },
   "icon": "💌",
   "nav": { "label": "Love Notes" }
 }

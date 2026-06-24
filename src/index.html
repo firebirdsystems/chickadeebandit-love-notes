@@ -223,6 +223,7 @@
 
     let members = [];
     let partner = null;
+    let partnerReciprocal = false;
     let notes   = [];
     let modalEl = null;
 
@@ -255,11 +256,10 @@
 
     async function loadPartnerFromDb() {
       if (!ME) return null;
-      const { rows } = await db(
-        "SELECT partner_id FROM app_love_notes__partner_config WHERE member_id = ?",
-        [ME.id]
-      );
-      return rows.length ? rows[0].partner_id : null;
+      const res = await fetch(`/run/${APP_ID}/api/partner`);
+      const status = res.ok ? await res.json() : { partner_id: null, reciprocal: false };
+      partnerReciprocal = status.reciprocal;
+      return status.partner_id;
     }
 
     async function loadNotes() {
@@ -283,7 +283,11 @@
       // Optimistic: clear unread dots locally and re-render before DB write
       notes = notes.map(n => n.read_at ? n : { ...n, read_at: now });
       render();
-      db("UPDATE app_love_notes__notes SET read_at = ? WHERE recipient_id = ? AND read_at IS NULL", [now, ME.id]).catch(() => {});
+      fetch(`/run/${APP_ID}/api/paired-message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "mark_read" }),
+      }).catch(() => {});
     }
 
     // ── Partner save ──────────────────────────────────────────────────────────
@@ -296,14 +300,20 @@
       if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
 
       try {
-        if (ME) {
-          await db(
-            `INSERT INTO app_love_notes__partner_config (member_id, partner_id) VALUES (?, ?)
-             ON CONFLICT (member_id) DO UPDATE SET partner_id = EXCLUDED.partner_id`,
-            [ME.id, partnerId]
-          );
-        }
+        const res = ME ? await fetch(`/run/${APP_ID}/api/partner`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ partner_id: partnerId }),
+        }) : null;
+        if (res && !res.ok) throw new Error((await res.json()).error ?? "Could not save partner");
+        const status = res ? await res.json() : { reciprocal: true };
+        partnerReciprocal = status.reciprocal;
         partner = members.find(m => m.id === partnerId) ?? null;
+        if (!partnerReciprocal) {
+          alert(`Waiting for ${partner?.name ?? "your partner"} to choose you too.`);
+          if (btn) { btn.disabled = false; btn.textContent = "Check Again"; }
+          window.showSetup();
+          return;
+        }
         // Show main immediately with empty notes, then load notes in background
         showMain();
         loadNotes().then(() => { markUnreadAsRead(); render(); });
@@ -358,15 +368,12 @@
 
       try {
         if (ME && partner) {
-          await db(
-            "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at) VALUES (?, ?, ?, ?, ?)",
-            [crypto.randomUUID(), ME.id, partner.id, result.trimmed, new Date().toISOString()]
-          );
-          fetch(window.__NOTIFY_URL ?? "/api/notifications/send", {
+          const res = await fetch(`/run/${APP_ID}/api/paired-message`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title: "New Love Note 💌", body: `${ME.name} left you a note`, url: `/run/${APP_ID}`, audience: partner.id }),
-          }).catch(() => {});
+            body: JSON.stringify({ action: "send", content: result.trimmed }),
+          });
+          if (!res.ok) throw new Error((await res.json()).error ?? "Could not send note");
         }
         closeModal();
       } catch(e) {
@@ -448,7 +455,7 @@
       // Load members and partner DB row in parallel — neither depends on the other
       const [, partnerId] = await Promise.all([loadMembers(), loadPartnerFromDb()]);
       partner = partnerId ? (members.find(m => m.id === partnerId) ?? null) : null;
-      if (!partner) {
+      if (!partner || !partnerReciprocal) {
         window.showSetup();
       } else {
         await loadNotes();

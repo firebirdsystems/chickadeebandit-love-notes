@@ -16,11 +16,19 @@
     "requires_approval": false
   },
   "storage": "db",
+  "partner_link": {
+    "table": "partner_config",
+    "member_column": "member_id",
+    "partner_id_column": "partner_id",
+    "session_id_column": "session_id",
+    "require_role": "adult"
+  },
   "row_policies": {
     "partner_config": {
       "kind": "owner_only",
       "member_column": "member_id",
-      "adults_bypass": false
+      "adults_bypass": false,
+      "endpoint_writes_only": true
     },
     "notes": {
       "kind": "couple_scoped",
@@ -28,7 +36,31 @@
       "participant_columns": ["sender_id", "recipient_id"],
       "partner_table": "partner_config",
       "partner_member_column": "member_id",
-      "partner_id_column": "partner_id"
+      "partner_id_column": "partner_id",
+      "session_column": "session_id",
+      "partner_session_id_column": "session_id",
+      "require_reciprocal": true,
+      "endpoint_writes_only": true
+    }
+  },
+  "paired_messages": {
+    "table": "notes",
+    "id_column": "id",
+    "sender_column": "sender_id",
+    "recipient_column": "recipient_id",
+    "content_column": "content",
+    "sent_at_column": "sent_at",
+    "read_at_column": "read_at",
+    "partner_table": "partner_config",
+    "partner_member_column": "member_id",
+    "partner_id_column": "partner_id",
+    "partner_session_id_column": "session_id",
+    "session_id_column": "session_id",
+    "require_reciprocal": true,
+    "max_length": 500,
+    "notify": {
+      "title": "New love note 💌",
+      "body": "Your partner left you a note."
     }
   },
   "icon": "💌",

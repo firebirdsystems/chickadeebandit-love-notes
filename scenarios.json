@@ -1,0 +1,50 @@
+{
+  "scenarios": [
+    {
+      "name": "notes are visible only to the two reciprocal partners; direct writes are endpoint-only",
+      "members": { "a": "adult", "b": "adult", "outsider": "adult" },
+      "steps": [
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": ["{{a}}", "{{b}}", "sess-ab"]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": ["{{b}}", "{{a}}", "sess-ab"]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, ?, ?)",
+          "params": ["n1", "{{a}}", "{{b}}", "secret note", "2026-01-01T00:00:00Z", "sess-ab"]
+        },
+        {
+          "action": "db",
+          "as": "b",
+          "sql": "SELECT id, content FROM app_love_notes__notes",
+          "expect": { "status": 200, "rowCount": 1, "rowsContain": [{ "id": "n1" }] }
+        },
+        {
+          "action": "db",
+          "as": "a",
+          "sql": "SELECT id FROM app_love_notes__notes",
+          "expect": { "status": 200, "rowCount": 1 }
+        },
+        {
+          "action": "db",
+          "as": "outsider",
+          "sql": "SELECT id FROM app_love_notes__notes",
+          "expect": { "status": 200, "rowCount": 0 }
+        },
+        {
+          "action": "db",
+          "as": "a",
+          "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, ?, ?)",
+          "params": ["n2", "{{a}}", "{{b}}", "forged", "2026-01-01T00:00:00Z", "sess-ab"],
+          "expect": { "status": 403, "errorIncludes": "endpoint" }
+        }
+      ]
+    }
+  ]
+}

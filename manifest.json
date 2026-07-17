@@ -1,14 +1,18 @@
 {
   "id": "love-notes",
   "name": "Love Notes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A private inbox for leaving short notes, compliments, or reminders for your partner.",
   "entrypoint": "index.html",
   "runtime": "static",
   "category": "couple",
-  "tags": ["couples"],
+  "tags": [
+    "couples"
+  ],
   "data_access": {
-    "reads": ["family.members"],
+    "reads": [
+      "family.members"
+    ],
     "writes": []
   },
   "permissions": {
@@ -33,7 +37,10 @@
     "notes": {
       "kind": "couple_scoped",
       "self_column": "sender_id",
-      "participant_columns": ["sender_id", "recipient_id"],
+      "participant_columns": [
+        "sender_id",
+        "recipient_id"
+      ],
       "partner_table": "partner_config",
       "partner_member_column": "member_id",
       "partner_id_column": "partner_id",
@@ -64,5 +71,8 @@
     }
   },
   "icon": "💌",
-  "nav": { "label": "Love Notes" }
+  "nav": {
+    "label": "Love Notes"
+  },
+  "kiosk": "never"
 }

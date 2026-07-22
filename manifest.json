@@ -1,5 +1,6 @@
 {
   "id": "love-notes",
+  "contexts": ["household", "shared_space"],
   "name": "Love Notes",
   "version": "1.0.1",
   "description": "A private inbox for leaving short notes, compliments, or reminders for your partner.",

@@ -28,6 +28,16 @@
     "session_id_column": "session_id",
     "require_role": "adult"
   },
+  "member_references": {
+    "partner_config": [
+      { "column": "member_id", "on_removed": "delete", "id_column": "rowid" },
+      { "column": "partner_id", "on_removed": "delete", "id_column": "rowid" }
+    ],
+    "notes": [
+      { "column": "sender_id", "on_removed": "keep" },
+      { "column": "recipient_id", "on_removed": "keep" }
+    ]
+  },
   "row_policies": {
     "partner_config": {
       "kind": "owner_only",

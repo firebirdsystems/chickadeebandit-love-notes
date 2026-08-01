@@ -176,6 +176,13 @@
     .char-count { font-size: 0.8rem; color: var(--hub-text-muted, #6b7280); text-align: right; margin: 4px 0 16px; }
     .char-count.over { color: #ef4444; }
     .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .search-row { margin-bottom: 12px; }
+    .search-input {
+      width: 100%; border: 1.5px solid var(--border-mid, var(--border, #d1d5db));
+      border-radius: 8px; padding: 9px 11px; font: inherit;
+      background: var(--surface, var(--card, #fff)); color: var(--text, inherit);
+    }
+    .search-input:focus { outline: none; border-color: var(--accent, #6366f1); }
   </style>
 </head>
 <body>
@@ -208,13 +215,16 @@
     </div>
     <div class="content">
       <div id="partner-bar" class="partner-bar"></div>
+      <div class="search-row" id="search-row" style="display:none">
+        <input id="search" class="search-input" type="search" placeholder="Search notes…" aria-label="Search notes" />
+      </div>
       <div id="notes-list" class="notes-list"></div>
     </div>
   </div>
 
   <script type="module">
-    import { esc, initial, memberColor, formatRelativeDate } from "/hub-sdk.js";
-    import { validateNote } from "./logic.js";
+    import { esc, initial, memberColor, formatRelativeDate, searchMatch } from "/hub-sdk.js";
+    import { validateNote, searchableFields } from "./logic.js";
 
     const CONTEXT = window.__CONTEXT_URL ?? "";
     const DB      = window.__DB_URL      ?? "";
@@ -225,6 +235,7 @@
     let partner = null;
     let partnerReciprocal = false;
     let notes   = [];
+let searchQ = "";       // in-app search (see logic.js searchableFields)
     let modalEl = null;
 
     // ── DB helper ─────────────────────────────────────────────────────────────
@@ -425,6 +436,13 @@
       render();
     }
 
+    // Only the note list is redrawn, so the search box keeps focus.
+    document.addEventListener("input", (e) => {
+      if (e.target.id !== "search") return;
+      searchQ = e.target.value;
+      render();
+    });
+
     function render() {
       const partnerBarEl = document.getElementById("partner-bar");
       if (partner) {
@@ -437,6 +455,10 @@
       }
 
       const listEl = document.getElementById("notes-list");
+      // Only worth offering the box once there is a pile to search.
+      const searchRow = document.getElementById("search-row");
+      if (searchRow) searchRow.style.display = notes.length ? "" : "none";
+
       if (!notes.length) {
         listEl.innerHTML = `
           <div class="empty-state">
@@ -447,7 +469,18 @@
       }
 
       const memberMap = Object.fromEntries(members.map(m => [m.id, m]));
-      listEl.innerHTML = notes.map(n => {
+      const shown = searchQ
+        ? notes.filter(n => searchMatch(searchQ, searchableFields(n, memberMap[n.sender_id]?.name ?? "")))
+        : notes;
+      if (!shown.length) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <p>No notes match "${esc(searchQ)}".</p>
+          </div>`;
+        return;
+      }
+      listEl.innerHTML = shown.map(n => {
         const sender = memberMap[n.sender_id] ?? { id: n.sender_id, name: "Someone" };
         const color  = memberColor(sender.id, members);
         const unread = !n.read_at;

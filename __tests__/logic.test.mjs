@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateNote } from "../src/logic.js";
+import { validateNote, searchableFields } from "../src/logic.js";
 
 describe("validateNote", () => {
   it("rejects empty and whitespace-only notes with a message", () => {
@@ -25,5 +25,13 @@ describe("validateNote", () => {
 
   it("accepts and trims a valid note", () => {
     expect(validateNote("  miss you  ")).toEqual({ valid: true, message: "", trimmed: "miss you" });
+  });
+});
+
+describe("searchableFields", () => {
+  it("matches on the note text and who sent it", () => {
+    const fields = searchableFields({ content: "thank you for yesterday" }, "Sam");
+    expect(fields).toContain("thank you for yesterday");
+    expect(fields).toContain("Sam");
   });
 });

@@ -82,6 +82,13 @@
     }
   },
   "icon": "💌",
+  "glance": {
+    "source": {
+      "kind": "sql",
+      "query": "SELECT COUNT(*) AS n FROM app_love_notes__notes WHERE recipient_id = :me AND read_at IS NULL LIMIT 1"
+    },
+    "display": { "template": "badge", "count": "n", "label": "unread notes for you", "severity": "info" }
+  },
   "nav": {
     "label": "Love Notes"
   },

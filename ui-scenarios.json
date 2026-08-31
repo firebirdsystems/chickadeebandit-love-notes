@@ -1,0 +1,133 @@
+{
+  "scenarios": [
+    {
+      "name": "a one-sided pairing does not open the mailbox",
+      "members": {
+        "a": "adult",
+        "b": "adult"
+      },
+      "steps": [
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{a}}",
+            "{{b}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "open",
+          "as": "a"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-setup\"]",
+          "as": "a"
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{b}}",
+            "{{a}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "reload",
+          "as": "a"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-main\"]",
+          "as": "a"
+        }
+      ]
+    },
+    {
+      "name": "the mailbox holds only notes addressed to you, and opening it marks them read for good",
+      "members": {
+        "a": "adult",
+        "b": "adult"
+      },
+      "steps": [
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{a}}",
+            "{{b}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{b}}",
+            "{{a}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, read_at, session_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "params": [
+            "n1",
+            "{{a}}",
+            "{{b}}",
+            "A note for you",
+            "2026-01-02T00:00:00Z",
+            null,
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, read_at, session_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "params": [
+            "n2",
+            "{{b}}",
+            "{{a}}",
+            "A note you sent",
+            "2026-01-01T00:00:00Z",
+            null,
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "open",
+          "as": "b"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-main\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectText",
+          "selector": "[data-testid=\"note-card\"][data-note-id=\"n1\"]",
+          "text": "A note for you",
+          "as": "b"
+        },
+        {
+          "action": "expectCount",
+          "selector": "[data-testid=\"note-card\"][data-note-id=\"n2\"]",
+          "count": 0,
+          "as": "b"
+        },
+        {
+          "action": "reload",
+          "as": "b"
+        },
+        {
+          "action": "expectCount",
+          "selector": "[data-testid=\"note-card\"][data-note-id=\"n1\"][data-unread=\"no\"]",
+          "count": 1,
+          "as": "b"
+        }
+      ]
+    }
+  ]
+}

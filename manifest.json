@@ -21,6 +21,9 @@
     "requires_approval": false
   },
   "storage": "db",
+  "preload": {
+    "notes": { "sql": "SELECT * FROM app_love_notes__notes WHERE recipient_id = ? ORDER BY sent_at DESC", "params": [":me"] }
+  },
   "partner_link": {
     "table": "partner_config",
     "member_column": "member_id",

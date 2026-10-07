@@ -48,7 +48,7 @@
       width: 100%;
       text-align: center;
     }
-    .setup-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .setup-icon { margin-bottom: 16px; }
     .setup-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
     .setup-card .setup-desc { color: var(--hub-text-muted, #6b7280); font-size: 0.9rem; margin-bottom: 24px; }
     .setup-card .pick-label { font-weight: 600; margin-bottom: 12px; text-align: left; display: block; }
@@ -118,7 +118,7 @@
     .empty-state {
       text-align: center; padding: 48px 20px; color: var(--hub-text-muted, #6b7280);
     }
-    .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; }
+    .empty-state .empty-icon { margin-bottom: 12px; }
     .empty-state p { font-size: 0.95rem; }
 
     /* ── Buttons ── */
@@ -191,7 +191,7 @@
   <div id="view-setup" class="view" data-testid="view-setup">
     <div class="setup-wrap">
       <div class="setup-card">
-        <div class="setup-icon">💌</div>
+        <div class="setup-icon" id="setup-glyph"></div>
         <h2>Love Notes</h2>
         <p class="setup-desc">Leave sweet notes for your partner. Only the two of you will see them.</p>
         <span class="pick-label">Who is your partner?</span>
@@ -205,12 +205,12 @@
   <div id="view-main" class="view" data-testid="view-main">
     <div class="app-header">
       <div class="app-header-left">
-        <span class="icon">💌</span>
+        <span class="icon" id="header-glyph"></span>
         <h1>Love Notes</h1>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <button class="btn-icon" title="Change partner" onclick="showSetup()">⚙️</button>
-        <button class="btn-primary" onclick="openCompose()">✏️ Write a Note</button>
+        <button class="btn-icon" id="partner-btn" title="Change partner" aria-label="Change partner" onclick="showSetup()"></button>
+        <button class="btn-primary" onclick="openCompose()"><span id="compose-glyph"></span> Write a Note</button>
       </div>
     </div>
     <div class="content">
@@ -223,8 +223,14 @@
   </div>
 
   <script type="module">
-    import { esc, initial, memberColor, formatRelativeDate, searchMatch } from "/hub-sdk.js";
+    import { esc, initial, memberColor, formatRelativeDate, searchMatch, glyph, chickadee } from "/hub-sdk.js";
     import { validateNote, searchableFields } from "./logic.js";
+
+    // Static markup cannot call the SDK helpers; fill these marks from script.
+    document.getElementById("setup-glyph").innerHTML = chickadee("pair");
+    document.getElementById("header-glyph").innerHTML = glyph("envelope-heart");
+    document.getElementById("partner-btn").innerHTML = glyph("gear");
+    document.getElementById("compose-glyph").innerHTML = glyph("pencil", { accent: "currentColor" });
 
     const CONTEXT = window.__CONTEXT_URL ?? "";
     const DB      = window.__DB_URL      ?? "";
@@ -367,7 +373,7 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         <div id="char-count" class="char-count">0 / 500</div>
         <div class="modal-actions">
           <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-          <button class="btn-primary" onclick="sendNote()">Send 💌</button>
+          <button class="btn-primary" onclick="sendNote()">Send ${glyph("envelope-heart", { accent: "currentColor" })}</button>
         </div>
       `);
       document.getElementById("compose-text").focus();
@@ -402,7 +408,7 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         }
         closeModal();
       } catch(e) {
-        if (btn) { btn.disabled = false; btn.textContent = "Send 💌"; }
+        if (btn) { btn.disabled = false; btn.innerHTML = `Send ${glyph("envelope-heart", { accent: "currentColor" })}`; }
         throw e;
       }
     };
@@ -462,7 +468,7 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
       if (!notes.length) {
         listEl.innerHTML = `
           <div class="empty-state">
-            <div class="empty-icon">💌</div>
+            <div class="empty-icon">${chickadee("mail")}</div>
             <p>No notes yet — write the first one for ${esc(partner?.name ?? "your partner")}.</p>
           </div>`;
         return;
@@ -475,7 +481,7 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
       if (!shown.length) {
         listEl.innerHTML = `
           <div class="empty-state">
-            <div class="empty-icon">🔍</div>
+            <div class="empty-icon">${chickadee("searching")}</div>
             <p>No notes match "${esc(searchQ)}".</p>
           </div>`;
         return;

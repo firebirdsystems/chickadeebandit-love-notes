@@ -1,0 +1,1120 @@
+{
+  "seed": [
+    {
+      "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+      "params": [
+        "{{me}}",
+        "{{partner}}",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+      "params": [
+        "{{partner}}",
+        "{{me}}",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1 hours'), ?)",
+      "params": [
+        "perf-note-000",
+        "{{partner}}",
+        "{{me}}",
+        "Good morning! Have a wonderful day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-25 hours','-11 minutes'), ?)",
+      "params": [
+        "perf-note-001",
+        "{{me}}",
+        "{{partner}}",
+        "Coffee is in the thermos by the door.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-42 hours','-22 minutes'), ?)",
+      "params": [
+        "perf-note-002",
+        "{{partner}}",
+        "{{me}}",
+        "Can't wait for the weekend.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-59 hours','-33 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-55 hours','-9 minutes'))",
+      "params": [
+        "perf-note-003",
+        "{{me}}",
+        "{{partner}}",
+        "Remember our first apartment? I drove past it today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-83 hours','-44 minutes'), ?)",
+      "params": [
+        "perf-note-004",
+        "{{partner}}",
+        "{{me}}",
+        "I booked the sitter for Friday.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-101 hours','-55 minutes'), ?)",
+      "params": [
+        "perf-note-005",
+        "{{partner}}",
+        "{{me}}",
+        "Still my favorite person.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-118 hours','-6 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-115 hours','-18 minutes'))",
+      "params": [
+        "perf-note-006",
+        "{{me}}",
+        "{{partner}}",
+        "Thinking of you between meetings.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-135 hours','-17 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-131 hours','-21 minutes'))",
+      "params": [
+        "perf-note-007",
+        "{{partner}}",
+        "{{me}}",
+        "Home late, save me a plate?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-159 hours','-28 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-158 hours','-24 minutes'))",
+      "params": [
+        "perf-note-008",
+        "{{me}}",
+        "{{partner}}",
+        "Good luck with the presentation, you have got this.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-176 hours','-39 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-174 hours','-27 minutes'))",
+      "params": [
+        "perf-note-009",
+        "{{partner}}",
+        "{{me}}",
+        "Missing you today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-194 hours','-50 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-191 hours','-30 minutes'))",
+      "params": [
+        "perf-note-010",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for listening last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-218 hours','-1 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-214 hours','-33 minutes'))",
+      "params": [
+        "perf-note-011",
+        "{{me}}",
+        "{{partner}}",
+        "Good morning! Have a wonderful day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-235 hours','-12 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-234 hours','-36 minutes'))",
+      "params": [
+        "perf-note-012",
+        "{{partner}}",
+        "{{me}}",
+        "Coffee is in the thermos by the door.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-252 hours','-23 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-250 hours','-39 minutes'))",
+      "params": [
+        "perf-note-013",
+        "{{me}}",
+        "{{partner}}",
+        "Can't wait for the weekend.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-269 hours','-34 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-266 hours','-42 minutes'))",
+      "params": [
+        "perf-note-014",
+        "{{partner}}",
+        "{{me}}",
+        "Remember our first apartment? I drove past it today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-294 hours','-45 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-290 hours','-45 minutes'))",
+      "params": [
+        "perf-note-015",
+        "{{partner}}",
+        "{{me}}",
+        "I booked the sitter for Friday.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-311 hours','-56 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-310 hours','-48 minutes'))",
+      "params": [
+        "perf-note-016",
+        "{{me}}",
+        "{{partner}}",
+        "Still my favorite person.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-328 hours','-7 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-326 hours','-1 minutes'))",
+      "params": [
+        "perf-note-017",
+        "{{partner}}",
+        "{{me}}",
+        "Thinking of you between meetings.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-352 hours','-18 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-349 hours','-4 minutes'))",
+      "params": [
+        "perf-note-018",
+        "{{me}}",
+        "{{partner}}",
+        "I love how you laugh at your own jokes.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-369 hours','-29 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-365 hours','-7 minutes'))",
+      "params": [
+        "perf-note-019",
+        "{{partner}}",
+        "{{me}}",
+        "Sorry I was short earlier. Long day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-387 hours','-40 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-386 hours','-10 minutes'))",
+      "params": [
+        "perf-note-020",
+        "{{partner}}",
+        "{{me}}",
+        "Missing you today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-404 hours','-51 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-402 hours','-13 minutes'))",
+      "params": [
+        "perf-note-021",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for listening last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-428 hours','-2 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-425 hours','-16 minutes'))",
+      "params": [
+        "perf-note-022",
+        "{{partner}}",
+        "{{me}}",
+        "Good morning! Have a wonderful day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-445 hours','-13 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-441 hours','-19 minutes'))",
+      "params": [
+        "perf-note-023",
+        "{{me}}",
+        "{{partner}}",
+        "Coffee is in the thermos by the door.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-462 hours','-24 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-461 hours','-22 minutes'))",
+      "params": [
+        "perf-note-024",
+        "{{partner}}",
+        "{{me}}",
+        "Can't wait for the weekend.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-487 hours','-35 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-485 hours','-25 minutes'))",
+      "params": [
+        "perf-note-025",
+        "{{partner}}",
+        "{{me}}",
+        "Remember our first apartment? I drove past it today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-504 hours','-46 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-501 hours','-28 minutes'))",
+      "params": [
+        "perf-note-026",
+        "{{me}}",
+        "{{partner}}",
+        "I booked the sitter for Friday.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-521 hours','-57 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-517 hours','-31 minutes'))",
+      "params": [
+        "perf-note-027",
+        "{{partner}}",
+        "{{me}}",
+        "Drive safe, text me when you get there.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-538 hours','-8 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-537 hours','-34 minutes'))",
+      "params": [
+        "perf-note-028",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for handling bedtime last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-562 hours','-19 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-560 hours','-37 minutes'))",
+      "params": [
+        "perf-note-029",
+        "{{partner}}",
+        "{{me}}",
+        "I love how you laugh at your own jokes.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-580 hours','-30 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-577 hours','-40 minutes'))",
+      "params": [
+        "perf-note-030",
+        "{{partner}}",
+        "{{me}}",
+        "Sorry I was short earlier. Long day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-597 hours','-41 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-593 hours','-43 minutes'))",
+      "params": [
+        "perf-note-031",
+        "{{me}}",
+        "{{partner}}",
+        "Missing you today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-621 hours','-52 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-620 hours','-46 minutes'))",
+      "params": [
+        "perf-note-032",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for listening last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-638 hours','-3 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-636 hours','-49 minutes'))",
+      "params": [
+        "perf-note-033",
+        "{{me}}",
+        "{{partner}}",
+        "Good morning! Have a wonderful day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-655 hours','-14 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-652 hours','-2 minutes'))",
+      "params": [
+        "perf-note-034",
+        "{{partner}}",
+        "{{me}}",
+        "Coffee is in the thermos by the door.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-673 hours','-25 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-669 hours','-5 minutes'))",
+      "params": [
+        "perf-note-035",
+        "{{partner}}",
+        "{{me}}",
+        "Can't wait for the weekend.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-697 hours','-36 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-696 hours','-8 minutes'))",
+      "params": [
+        "perf-note-036",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for the tea.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-714 hours','-47 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-712 hours','-11 minutes'))",
+      "params": [
+        "perf-note-037",
+        "{{partner}}",
+        "{{me}}",
+        "Sleep well. See you in the morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-731 hours','-58 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-728 hours','-14 minutes'))",
+      "params": [
+        "perf-note-038",
+        "{{me}}",
+        "{{partner}}",
+        "Drive safe, text me when you get there.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-755 hours','-9 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-751 hours','-17 minutes'))",
+      "params": [
+        "perf-note-039",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for handling bedtime last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-773 hours','-20 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-772 hours','-20 minutes'))",
+      "params": [
+        "perf-note-040",
+        "{{partner}}",
+        "{{me}}",
+        "I love how you laugh at your own jokes.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-790 hours','-31 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-788 hours','-23 minutes'))",
+      "params": [
+        "perf-note-041",
+        "{{me}}",
+        "{{partner}}",
+        "Sorry I was short earlier. Long day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-807 hours','-42 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-804 hours','-26 minutes'))",
+      "params": [
+        "perf-note-042",
+        "{{partner}}",
+        "{{me}}",
+        "Missing you today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-831 hours','-53 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-827 hours','-29 minutes'))",
+      "params": [
+        "perf-note-043",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for listening last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-848 hours','-4 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-847 hours','-32 minutes'))",
+      "params": [
+        "perf-note-044",
+        "{{partner}}",
+        "{{me}}",
+        "Good morning! Have a wonderful day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-866 hours','-15 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-864 hours','-35 minutes'))",
+      "params": [
+        "perf-note-045",
+        "{{partner}}",
+        "{{me}}",
+        "Proud of you for today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-890 hours','-26 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-887 hours','-38 minutes'))",
+      "params": [
+        "perf-note-046",
+        "{{me}}",
+        "{{partner}}",
+        "You make ordinary days better.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-907 hours','-37 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-903 hours','-41 minutes'))",
+      "params": [
+        "perf-note-047",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for the tea.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-924 hours','-48 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-923 hours','-44 minutes'))",
+      "params": [
+        "perf-note-048",
+        "{{me}}",
+        "{{partner}}",
+        "Sleep well. See you in the morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-941 hours','-59 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-939 hours','-47 minutes'))",
+      "params": [
+        "perf-note-049",
+        "{{partner}}",
+        "{{me}}",
+        "Drive safe, text me when you get there.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-966 hours','-10 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-963 hours'))",
+      "params": [
+        "perf-note-050",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for handling bedtime last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-983 hours','-21 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-979 hours','-3 minutes'))",
+      "params": [
+        "perf-note-051",
+        "{{me}}",
+        "{{partner}}",
+        "I love how you laugh at your own jokes.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1000 hours','-32 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-999 hours','-6 minutes'))",
+      "params": [
+        "perf-note-052",
+        "{{partner}}",
+        "{{me}}",
+        "Sorry I was short earlier. Long day.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1024 hours','-43 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1022 hours','-9 minutes'))",
+      "params": [
+        "perf-note-053",
+        "{{me}}",
+        "{{partner}}",
+        "Missing you today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1041 hours','-54 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1038 hours','-12 minutes'))",
+      "params": [
+        "perf-note-054",
+        "{{partner}}",
+        "{{me}}",
+        "Meet me on the porch after bedtime?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1059 hours','-5 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1055 hours','-15 minutes'))",
+      "params": [
+        "perf-note-055",
+        "{{partner}}",
+        "{{me}}",
+        "Don't forget we have dinner plans at seven.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1076 hours','-16 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1075 hours','-18 minutes'))",
+      "params": [
+        "perf-note-056",
+        "{{me}}",
+        "{{partner}}",
+        "Proud of you for today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1100 hours','-27 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1098 hours','-21 minutes'))",
+      "params": [
+        "perf-note-057",
+        "{{partner}}",
+        "{{me}}",
+        "You make ordinary days better.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1117 hours','-38 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1114 hours','-24 minutes'))",
+      "params": [
+        "perf-note-058",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for the tea.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1134 hours','-49 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1130 hours','-27 minutes'))",
+      "params": [
+        "perf-note-059",
+        "{{partner}}",
+        "{{me}}",
+        "Sleep well. See you in the morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1159 hours'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1158 hours','-30 minutes'))",
+      "params": [
+        "perf-note-060",
+        "{{partner}}",
+        "{{me}}",
+        "Drive safe, text me when you get there.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1176 hours','-11 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1174 hours','-33 minutes'))",
+      "params": [
+        "perf-note-061",
+        "{{me}}",
+        "{{partner}}",
+        "Thank you for handling bedtime last night.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1193 hours','-22 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1190 hours','-36 minutes'))",
+      "params": [
+        "perf-note-062",
+        "{{partner}}",
+        "{{me}}",
+        "I love how you laugh at your own jokes.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1210 hours','-33 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1206 hours','-39 minutes'))",
+      "params": [
+        "perf-note-063",
+        "{{me}}",
+        "{{partner}}",
+        "The kids are asleep. Come sit with me.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1234 hours','-44 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1233 hours','-42 minutes'))",
+      "params": [
+        "perf-note-064",
+        "{{partner}}",
+        "{{me}}",
+        "Dinner is on me tonight.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1252 hours','-55 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1250 hours','-45 minutes'))",
+      "params": [
+        "perf-note-065",
+        "{{partner}}",
+        "{{me}}",
+        "Meet me on the porch after bedtime?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1269 hours','-6 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1266 hours','-48 minutes'))",
+      "params": [
+        "perf-note-066",
+        "{{me}}",
+        "{{partner}}",
+        "Don't forget we have dinner plans at seven.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1293 hours','-17 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1289 hours','-1 minutes'))",
+      "params": [
+        "perf-note-067",
+        "{{partner}}",
+        "{{me}}",
+        "Proud of you for today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1310 hours','-28 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1309 hours','-4 minutes'))",
+      "params": [
+        "perf-note-068",
+        "{{me}}",
+        "{{partner}}",
+        "You make ordinary days better.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1327 hours','-39 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1325 hours','-7 minutes'))",
+      "params": [
+        "perf-note-069",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for the tea.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1345 hours','-50 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1342 hours','-10 minutes'))",
+      "params": [
+        "perf-note-070",
+        "{{partner}}",
+        "{{me}}",
+        "Sleep well. See you in the morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1369 hours','-1 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1365 hours','-13 minutes'))",
+      "params": [
+        "perf-note-071",
+        "{{me}}",
+        "{{partner}}",
+        "Drive safe, text me when you get there.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1386 hours','-12 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1385 hours','-16 minutes'))",
+      "params": [
+        "perf-note-072",
+        "{{partner}}",
+        "{{me}}",
+        "You looked great this morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1403 hours','-23 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1401 hours','-19 minutes'))",
+      "params": [
+        "perf-note-073",
+        "{{me}}",
+        "{{partner}}",
+        "Left you something in your coat pocket.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1427 hours','-34 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1424 hours','-22 minutes'))",
+      "params": [
+        "perf-note-074",
+        "{{partner}}",
+        "{{me}}",
+        "The kids are asleep. Come sit with me.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1445 hours','-45 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1441 hours','-25 minutes'))",
+      "params": [
+        "perf-note-075",
+        "{{partner}}",
+        "{{me}}",
+        "Dinner is on me tonight.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1462 hours','-56 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1461 hours','-28 minutes'))",
+      "params": [
+        "perf-note-076",
+        "{{me}}",
+        "{{partner}}",
+        "Meet me on the porch after bedtime?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1479 hours','-7 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1477 hours','-31 minutes'))",
+      "params": [
+        "perf-note-077",
+        "{{partner}}",
+        "{{me}}",
+        "Don't forget we have dinner plans at seven.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1503 hours','-18 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1500 hours','-34 minutes'))",
+      "params": [
+        "perf-note-078",
+        "{{me}}",
+        "{{partner}}",
+        "Proud of you for today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1520 hours','-29 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1516 hours','-37 minutes'))",
+      "params": [
+        "perf-note-079",
+        "{{partner}}",
+        "{{me}}",
+        "You make ordinary days better.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1538 hours','-40 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1537 hours','-40 minutes'))",
+      "params": [
+        "perf-note-080",
+        "{{partner}}",
+        "{{me}}",
+        "Thank you for the tea.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1562 hours','-51 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1560 hours','-43 minutes'))",
+      "params": [
+        "perf-note-081",
+        "{{me}}",
+        "{{partner}}",
+        "That song came on and I thought of you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1579 hours','-2 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1576 hours','-46 minutes'))",
+      "params": [
+        "perf-note-082",
+        "{{partner}}",
+        "{{me}}",
+        "The garden looks lovely, thank you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1596 hours','-13 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1592 hours','-49 minutes'))",
+      "params": [
+        "perf-note-083",
+        "{{me}}",
+        "{{partner}}",
+        "You looked great this morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1613 hours','-24 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1612 hours','-2 minutes'))",
+      "params": [
+        "perf-note-084",
+        "{{partner}}",
+        "{{me}}",
+        "Left you something in your coat pocket.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1638 hours','-35 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1636 hours','-5 minutes'))",
+      "params": [
+        "perf-note-085",
+        "{{partner}}",
+        "{{me}}",
+        "The kids are asleep. Come sit with me.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1655 hours','-46 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1652 hours','-8 minutes'))",
+      "params": [
+        "perf-note-086",
+        "{{me}}",
+        "{{partner}}",
+        "Dinner is on me tonight.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1672 hours','-57 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1668 hours','-11 minutes'))",
+      "params": [
+        "perf-note-087",
+        "{{partner}}",
+        "{{me}}",
+        "Meet me on the porch after bedtime?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1696 hours','-8 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1695 hours','-14 minutes'))",
+      "params": [
+        "perf-note-088",
+        "{{me}}",
+        "{{partner}}",
+        "Don't forget we have dinner plans at seven.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1713 hours','-19 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1711 hours','-17 minutes'))",
+      "params": [
+        "perf-note-089",
+        "{{partner}}",
+        "{{me}}",
+        "Proud of you for today.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1731 hours','-30 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1728 hours','-20 minutes'))",
+      "params": [
+        "perf-note-090",
+        "{{partner}}",
+        "{{me}}",
+        "Good luck with the presentation, you have got this.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1748 hours','-41 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1744 hours','-23 minutes'))",
+      "params": [
+        "perf-note-091",
+        "{{me}}",
+        "{{partner}}",
+        "You were right about the route, by the way.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1772 hours','-52 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1771 hours','-26 minutes'))",
+      "params": [
+        "perf-note-092",
+        "{{partner}}",
+        "{{me}}",
+        "That song came on and I thought of you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1789 hours','-3 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1787 hours','-29 minutes'))",
+      "params": [
+        "perf-note-093",
+        "{{me}}",
+        "{{partner}}",
+        "The garden looks lovely, thank you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1806 hours','-14 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1803 hours','-32 minutes'))",
+      "params": [
+        "perf-note-094",
+        "{{partner}}",
+        "{{me}}",
+        "You looked great this morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1831 hours','-25 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1827 hours','-35 minutes'))",
+      "params": [
+        "perf-note-095",
+        "{{partner}}",
+        "{{me}}",
+        "Left you something in your coat pocket.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1848 hours','-36 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1847 hours','-38 minutes'))",
+      "params": [
+        "perf-note-096",
+        "{{me}}",
+        "{{partner}}",
+        "The kids are asleep. Come sit with me.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1865 hours','-47 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1863 hours','-41 minutes'))",
+      "params": [
+        "perf-note-097",
+        "{{partner}}",
+        "{{me}}",
+        "Dinner is on me tonight.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1882 hours','-58 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1879 hours','-44 minutes'))",
+      "params": [
+        "perf-note-098",
+        "{{me}}",
+        "{{partner}}",
+        "Meet me on the porch after bedtime?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1906 hours','-9 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1902 hours','-47 minutes'))",
+      "params": [
+        "perf-note-099",
+        "{{partner}}",
+        "{{me}}",
+        "Thinking of you between meetings.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1924 hours','-20 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1923 hours'))",
+      "params": [
+        "perf-note-100",
+        "{{partner}}",
+        "{{me}}",
+        "Home late, save me a plate?",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1941 hours','-31 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1939 hours','-3 minutes'))",
+      "params": [
+        "perf-note-101",
+        "{{me}}",
+        "{{partner}}",
+        "Good luck with the presentation, you have got this.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1965 hours','-42 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1962 hours','-6 minutes'))",
+      "params": [
+        "perf-note-102",
+        "{{partner}}",
+        "{{me}}",
+        "You were right about the route, by the way.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1982 hours','-53 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1978 hours','-9 minutes'))",
+      "params": [
+        "perf-note-103",
+        "{{me}}",
+        "{{partner}}",
+        "That song came on and I thought of you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1999 hours','-4 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-1998 hours','-12 minutes'))",
+      "params": [
+        "perf-note-104",
+        "{{partner}}",
+        "{{me}}",
+        "The garden looks lovely, thank you.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2017 hours','-15 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2015 hours','-15 minutes'))",
+      "params": [
+        "perf-note-105",
+        "{{partner}}",
+        "{{me}}",
+        "You looked great this morning.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2041 hours','-26 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2038 hours','-18 minutes'))",
+      "params": [
+        "perf-note-106",
+        "{{me}}",
+        "{{partner}}",
+        "Left you something in your coat pocket.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2058 hours','-37 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2054 hours','-21 minutes'))",
+      "params": [
+        "perf-note-107",
+        "{{partner}}",
+        "{{me}}",
+        "The kids are asleep. Come sit with me.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2075 hours','-48 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2074 hours','-24 minutes'))",
+      "params": [
+        "perf-note-108",
+        "{{me}}",
+        "{{partner}}",
+        "I booked the sitter for Friday.",
+        "perf-notes-session"
+      ]
+    },
+    {
+      "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, session_id, read_at) VALUES (?, ?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2099 hours','-59 minutes'), ?, strftime('%Y-%m-%dT%H:%M:%fZ','now','-2097 hours','-27 minutes'))",
+      "params": [
+        "perf-note-109",
+        "{{partner}}",
+        "{{me}}",
+        "Still my favorite person.",
+        "perf-notes-session"
+      ]
+    }
+  ]
+}

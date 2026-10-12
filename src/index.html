@@ -183,9 +183,29 @@
       background: var(--surface, var(--card, #fff)); color: var(--text, inherit);
     }
     .search-input:focus { outline: none; border-color: var(--accent, #6366f1); }
+
+    .app-error {
+      margin: 12px 16px; padding: 10px 14px; border-radius: var(--hub-radius, 8px);
+      background: var(--hub-tint-danger, #fee2e2); color: var(--hub-tint-danger-fg, #b91c1c);
+      font-size: 0.9rem;
+    }
+    .modal .app-error { margin: 12px 0 0; }
+    .load-error {
+      margin: 12px 16px; padding: 10px 14px; border-radius: var(--hub-radius, 8px);
+      background: var(--hub-tint-danger, #fee2e2); color: var(--hub-tint-danger-fg, #b91c1c);
+      font-size: 0.9rem; display: flex; gap: 10px; align-items: center; justify-content: space-between;
+    }
+    .load-error[hidden] { display: none; }
+    .load-error-retry {
+      background: none; border: 1px solid currentColor; border-radius: var(--hub-radius, 8px);
+      padding: 4px 10px; color: inherit; font: inherit; cursor: pointer; white-space: nowrap;
+    }
   </style>
 </head>
 <body>
+
+  <div id="app-error" class="app-error" role="alert" style="display:none"></div>
+  <div id="load-error" class="load-error" data-testid="load-error" role="alert" hidden><span>Couldn’t load your partner.</span> <button type="button" class="load-error-retry" data-testid="load-retry">Try again</button></div>
 
   <!-- ── Setup view ── -->
   <div id="view-setup" class="view" data-testid="view-setup">
@@ -252,7 +272,45 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sql, params }),
       });
-      return res.json();
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json || typeof json !== "object" || json.error) throw new Error(json?.error || "Couldn’t reach the hub. Try again.");
+      return json;
+    }
+
+    // A failure shows inside the open dialog when there is one (the page
+    // banner sits behind it), otherwise in the banner above the page.
+    function showError(message) {
+      const text = message || "Something went wrong. Try again.";
+      const box = modalEl?.querySelector(".modal");
+      if (box) {
+        let line = box.querySelector(".app-error");
+        if (!line) {
+          line = document.createElement("div");
+          line.className = "app-error";
+          line.setAttribute("role", "alert");
+          box.insertBefore(line, box.querySelector(".modal-actions"));
+        }
+        line.textContent = text;
+        return;
+      }
+      const banner = document.getElementById("app-error");
+      banner.textContent = text;
+      banner.style.display = "";
+    }
+    function clearError() { document.getElementById("app-error").style.display = "none"; }
+
+    // The first load failed: a banner that stays until a load succeeds. While
+    // it shows, the note list is not drawn as empty.
+    let loadFailed = false;
+    function showLoadError(thing) {
+      loadFailed = true;
+      const banner = document.getElementById("load-error");
+      banner.querySelector("span").textContent = `Couldn’t load ${thing}.`;
+      banner.hidden = false;
+    }
+    function clearLoadError() {
+      loadFailed = false;
+      document.getElementById("load-error").hidden = true;
     }
 
     // ── Data loading ──────────────────────────────────────────────────────────
@@ -265,16 +323,21 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         ];
         return;
       }
-      try {
-        const res = await fetch(`${CONTEXT}?keys=family.members`);
-        members = ((await res.json())["family.members"]) ?? [];
-      } catch { members = []; }
+      // A member list that could not be read is a failed load, not a household with nobody in it.
+      const res = await fetch(`${CONTEXT}?keys=family.members`);
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data || typeof data !== "object" || data.error || (Array.isArray(data.$errors) && data.$errors.includes("family.members"))) throw new Error("Couldn’t reach the hub. Try again.");
+      members = data["family.members"] ?? [];
     }
 
     async function loadPartnerFromDb() {
       if (!ME) return null;
       const res = await fetch(`/run/${APP_ID}/api/partner`);
-      const status = res.ok ? await res.json() : { partner_id: null, reciprocal: false };
+      // A failed read is not "no partner yet": it must not open the setup view.
+      if (!res.ok) throw new Error("partner unavailable");
+      const status = await res.json();
+      // An unpaired member is answered 200 with partner_id null; anything else is not an answer.
+      if (!status || typeof status !== "object" || !("partner_id" in status)) throw new Error("partner unavailable");
       partnerReciprocal = status.reciprocal;
       return status.partner_id;
     }
@@ -315,13 +378,14 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
 
       const btn = document.querySelector('#view-setup .btn-primary');
       if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+      clearError();
 
       try {
         const res = ME ? await fetch(`/run/${APP_ID}/api/partner`, {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ partner_id: partnerId }),
         }) : null;
-        if (res && !res.ok) throw new Error((await res.json()).error ?? "Could not save partner");
+        if (res && !res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? "Could not save partner");
         const status = res ? await res.json() : { reciprocal: true };
         partnerReciprocal = status.reciprocal;
         partner = members.find(m => m.id === partnerId) ?? null;
@@ -333,10 +397,10 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         }
         // Show main immediately with empty notes, then load notes in background
         showMain();
-        loadNotes().then(() => { markUnreadAsRead(); render(); });
+        loadNotes().then(() => { markUnreadAsRead(); render(); }).catch(() => { showLoadError("your notes"); render(); });
       } catch(e) {
         if (btn) { btn.disabled = false; btn.textContent = "Get Started"; }
-        throw e;
+        showError(e.message);
       }
     };
 
@@ -404,12 +468,12 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ action: "send", content: result.trimmed }),
           });
-          if (!res.ok) throw new Error((await res.json()).error ?? "Could not send note");
+          if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? "Could not send note");
         }
         closeModal();
       } catch(e) {
         if (btn) { btn.disabled = false; btn.innerHTML = `Send ${glyph("envelope-heart", { accent: "currentColor" })}`; }
-        throw e;
+        showError(e.message);
       }
     };
 
@@ -466,8 +530,9 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
       if (searchRow) searchRow.style.display = notes.length ? "" : "none";
 
       if (!notes.length) {
+        if (loadFailed) { listEl.innerHTML = ""; return; }
         listEl.innerHTML = `
-          <div class="empty-state">
+          <div class="empty-state" data-testid="empty-state">
             <div class="empty-icon">${chickadee("mail")}</div>
             <p>No notes yet — write the first one for ${esc(partner?.name ?? "your partner")}.</p>
           </div>`;
@@ -504,18 +569,36 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
-    (async () => {
+    async function start() {
       // Load members and partner DB row in parallel — neither depends on the other
-      const [, partnerId] = await Promise.all([loadMembers(), loadPartnerFromDb()]);
+      let partnerId;
+      try {
+        [, partnerId] = await Promise.all([loadMembers(), loadPartnerFromDb()]);
+      } catch {
+        // Neither view opens: a member whose pairing could not be read is not sent to setup.
+        showLoadError("your partner");
+        return;
+      }
       partner = partnerId ? (members.find(m => m.id === partnerId) ?? null) : null;
       if (!partner || !partnerReciprocal) {
+        clearLoadError();
         window.showSetup();
-      } else {
-        await loadNotes();
-        showMain();
-        markUnreadAsRead();
+        return;
       }
-    })();
+      try {
+        await loadNotes();
+      } catch {
+        // The mailbox still opens when its notes cannot be read, with the banner above it.
+        showLoadError("your notes");
+        showMain();
+        return;
+      }
+      clearLoadError();
+      showMain();
+      markUnreadAsRead();
+    }
+    document.querySelector('[data-testid="load-retry"]').addEventListener("click", start);
+    start();
   </script>
 </body>
 </html>

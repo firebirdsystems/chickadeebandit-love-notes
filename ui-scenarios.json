@@ -128,6 +128,134 @@
           "as": "b"
         }
       ]
+    },
+    {
+      "name": "a paired member whose notes cannot be read is told so, not shown an empty mailbox",
+      "members": {
+        "a": "adult",
+        "b": "adult"
+      },
+      "steps": [
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{a}}",
+            "{{b}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__partner_config (member_id, partner_id, session_id) VALUES (?, ?, ?)",
+          "params": [
+            "{{b}}",
+            "{{a}}",
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "seedRaw",
+          "sql": "INSERT INTO app_love_notes__notes (id, sender_id, recipient_id, content, sent_at, read_at, session_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "params": [
+            "n1",
+            "{{a}}",
+            "{{b}}",
+            "A note for you",
+            "2026-01-02T00:00:00Z",
+            null,
+            "sess-ab"
+          ]
+        },
+        {
+          "action": "open",
+          "as": "b"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-main\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectText",
+          "selector": "[data-testid=\"note-card\"][data-note-id=\"n1\"]",
+          "text": "A note for you",
+          "as": "b"
+        },
+        {
+          "action": "expectHidden",
+          "selector": "[data-testid=\"load-error\"]",
+          "as": "b"
+        },
+        {
+          "action": "fault",
+          "mode": "down",
+          "as": "b"
+        },
+        {
+          "action": "reload",
+          "as": "b"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"load-error\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectText",
+          "selector": "[data-testid=\"load-error\"]",
+          "text": "Couldn’t load your notes.",
+          "as": "b"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-main\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectHidden",
+          "selector": "[data-testid=\"view-setup\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectCount",
+          "selector": "[data-testid=\"empty-state\"]",
+          "count": 0,
+          "as": "b"
+        },
+        {
+          "action": "expectCount",
+          "selector": "[data-testid=\"note-card\"]",
+          "count": 0,
+          "as": "b"
+        },
+        {
+          "action": "fault",
+          "mode": "none",
+          "as": "b"
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid=\"load-retry\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectText",
+          "selector": "[data-testid=\"note-card\"][data-note-id=\"n1\"]",
+          "text": "A note for you",
+          "as": "b"
+        },
+        {
+          "action": "expectVisible",
+          "selector": "[data-testid=\"view-main\"]",
+          "as": "b"
+        },
+        {
+          "action": "expectHidden",
+          "selector": "[data-testid=\"load-error\"]",
+          "as": "b"
+        }
+      ]
     }
   ]
 }

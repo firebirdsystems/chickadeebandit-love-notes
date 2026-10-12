@@ -400,7 +400,8 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         loadNotes().then(() => { markUnreadAsRead(); render(); }).catch(() => { showLoadError("your notes"); render(); });
       } catch(e) {
         if (btn) { btn.disabled = false; btn.textContent = "Get Started"; }
-        showError(e.message);
+        console.error("[love-notes] partner not saved", e);
+        showError("Couldn’t save your partner — try again.");
       }
     };
 
@@ -473,7 +474,8 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
         closeModal();
       } catch(e) {
         if (btn) { btn.disabled = false; btn.innerHTML = `Send ${glyph("envelope-heart", { accent: "currentColor" })}`; }
-        showError(e.message);
+        console.error("[love-notes] note not sent", e);
+        showError("Couldn’t send the note — try again.");
       }
     };
 

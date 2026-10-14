@@ -244,7 +244,7 @@
 
   <script type="module">
     import { esc, initial, memberColor, formatRelativeDate, searchMatch, glyph, chickadee } from "/hub-sdk.js";
-    import { validateNote, searchableFields } from "./logic.js";
+    import { validateNote, searchableFields, failureLine, pairedFailureLine } from "./logic.js";
 
     // Static markup cannot call the SDK helpers; fill these marks from script.
     document.getElementById("setup-glyph").innerHTML = chickadee("pair");
@@ -385,7 +385,8 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ partner_id: partnerId }),
         }) : null;
-        if (res && !res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? "Could not save partner");
+        // The status picks the line shown; the hub's text stays in the console.
+        if (res && !res.ok) throw Object.assign(new Error((await res.json().catch(() => ({}))).error ?? "Could not save partner"), { status: res.status });
         const status = res ? await res.json() : { reciprocal: true };
         partnerReciprocal = status.reciprocal;
         partner = members.find(m => m.id === partnerId) ?? null;
@@ -401,7 +402,7 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
       } catch(e) {
         if (btn) { btn.disabled = false; btn.textContent = "Get Started"; }
         console.error("[love-notes] partner not saved", e);
-        showError("Couldn’t save your partner — try again.");
+        showError(failureLine(e, { action: "save your partner", thing: "partner" }));
       }
     };
 
@@ -462,20 +463,25 @@ let searchQ = "";       // in-app search (see logic.js searchableFields)
       const btn = modalEl?.querySelector(".modal-actions .btn-primary");
       if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
 
+      // One key per compose form and text, sent on every retry: the hub stores a
+      // note whose answer was lost once, not twice. Edited text is a new note.
+      if (modalEl && modalEl.dataset.keyText !== result.trimmed) { modalEl.dataset.noteKey = crypto.randomUUID(); modalEl.dataset.keyText = result.trimmed; }
+      const idempotencyKey = modalEl?.dataset.noteKey;
+
       try {
         if (ME && partner) {
           const res = await fetch(`/run/${APP_ID}/api/paired-message`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "send", content: result.trimmed }),
+            body: JSON.stringify({ action: "send", content: result.trimmed, ...(idempotencyKey ? { idempotency_key: idempotencyKey } : {}) }),
           });
-          if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? "Could not send note");
+          if (!res.ok) throw Object.assign(new Error((await res.json().catch(() => ({}))).error ?? "Could not send note"), { status: res.status });
         }
         closeModal();
       } catch(e) {
         if (btn) { btn.disabled = false; btn.innerHTML = `Send ${glyph("envelope-heart", { accent: "currentColor" })}`; }
         console.error("[love-notes] note not sent", e);
-        showError("Couldn’t send the note — try again.");
+        showError(pairedFailureLine(e, { action: "send the note", thing: "note" }));
       }
     };
 

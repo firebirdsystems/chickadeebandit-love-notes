@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS app_love_notes__partner_config (
 );
 
 CREATE TABLE IF NOT EXISTS app_love_notes__notes (
-  id TEXT PRIMARY KEY,
+  id TEXT NOT NULL PRIMARY KEY,
   sender_id TEXT NOT NULL,
   recipient_id TEXT NOT NULL,
   content TEXT NOT NULL,
